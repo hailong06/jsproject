@@ -96,18 +96,18 @@ body.active{
     left: 0;
     transition-delay: 0.25s;
 }
-.formBx .form form{
+.formBx .form #form{
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.formBx .form form h3{
+.formBx .form #form h3{
     font-size: 1.5em;
     color: #333;
     margin-bottom: 20px;
     font-weight: 500;
 }
-.formBx .form form input{
+.formBx .form #form input{
     width: 100%;
     margin-bottom: 20px;
     padding: 10px;
@@ -115,7 +115,7 @@ body.active{
     font-size: 16px;
     border: 1px solid #333;
 }
-.formBx .form form button[type="submit"]{
+.formBx .form #form button[type="submit"]{
     background: #03a9f4;
     border: none;
     color: #fff;
@@ -128,9 +128,12 @@ body.active{
 .formBx.active .signupForm button[type="submit"]{
     background: red;
 }
-.formBx .form form .forgot{
+.formBx .form #form .forgot{
     color: #333;
     
+}
+#logout{
+    display: none;
 }
 @media (max-width: 991px){
     .container{
