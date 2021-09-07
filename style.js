@@ -18,78 +18,114 @@ var objPeople = [
 		password: "123456"
 	}
 ]
-function getInfo() {
-	var username = document.getElementById('username').value
-	var password = document.getElementById('password').value
-	var success = -1;
-	for(var i = 0; i < objPeople.length; i++) {
-		// check is user input matches username and password of a current index of the objPeople array
-		if(username == objPeople[i].username && password == objPeople[i].password) {
-			document.getElementById("inforname1").style.display= 'none';
-			document.getElementById("infor").style.display= 'block';
-			document.getElementById("logout").style.display= 'block';
-			console.log(infor);
-			alert("Welcome " + username + " is logged in!!!")
-			success = i;
-			prname = username;
-			document.getElementById("inforname").innerHTML= "Welcome " + prname;
-			return
-		}else if(username == '' || password == ''){
-			alert("Không để trống");
-		}
-		
-	}
-	alert("Sai");
-}
-function registerUser(){
-    var registerUser = document.getElementById("newUsername").value
-    var registerPassword = document.getElementById("newPassword").value
-	var Repassword = document.getElementById("Repassword").value
-    var newUser = {
-        username: registerUser,
-        password: registerPassword,
-		repassword: Repassword
-    }
-    for (i = 0; i < objPeople.length; i++) {
-        if(registerUser == objPeople[i].username){
-            alert("that username is already use, please choose another")
-            return
-        } else if(registerPassword.length<6){
-            alert("password is too short, include 6 or more characters")
-        }else if(registerPassword === Repassword ){
-            alert("password and repassword  không trùng khớp")
+
+$(document).ready(function(){
+    // Login- js
+	$('#login_btn').click(function(){
+        var username = $('#username').val();
+        var password = $('#password').val();
+        var success = -1;
+        for (i = 0; i< objPeople.length; i++){
+            if(username == objPeople[i].username && password == objPeople[i].password) {
+                $('#inforname1').css('display','none');
+                $('#infor').css('display','block');
+                $('#logout').css('display','block');
+                alert("Welcome " + username);
+                success=[i];
+                prname = username;
+                $('#inforname').html('Welcome ' + prname);
+            }
+        } 
+    });
+
+    // Register-js
+   
+    $("#form").validate({
+        rules: {
+        	username: {
+        		required: true,
+        		maxlength: 15
+        	},
+        	password: {
+        		required: true,
+        		minlength: 5
+        	}
+        },
+        messages: {
+            username: {
+        		required: "Bắt buộc nhập username",
+        		maxlength: "Hãy nhập tối đa 15 ký tự",
+                minlength: "Tên quá ngắn"
+        	},
+        	password: {
+        		required: "Bắt buộc nhập password",
+        		minlength: "Hãy nhập ít nhất 5 ký tự"
+        	}
         }
-    }
-    objPeople.push(newUser)
-    console.log(objPeople)
-}
-function Logout() {
-    document.getElementById("inforname1").style.display = 'block';
-    document.getElementById("infor").style.display = 'none';
-    document.getElementById("logout").style.display = 'none';
-	document.getElementById("inforname").style.display = 'none';
-    document.getElementsById("formlogin").reset();
-}
-// function alertInformation() {
-//     var username = 'admin';
-//     var password = '123456';
+    });
 
-//     var userName = document.getElementById('username').value;
-//     var passWord = document.getElementById('password').value;
-
-// if ((username == userName) && (password == passWord)) {
-// 	swal("Good job", "Login Success");
-// } else {
-// 	sweetAlert("Oops...", "Username or Password was wrong");
-// }
-// }
-// form.addEventListener('submit', (e) => {
-// if (password.value.length <= 6) {
-// 	alert("Password must be longer than 6 characters");
-// }
-// if(password.value.length < 6) {
-// 	alert( "Password must be longer than 6 characters")
-// 	// stop the function if this is found to be true
-// 	return
-// }
-// })
+    $("#form2").validate({
+        rules: {
+            newUsername: {
+                required: true,
+        		maxlength: 15,
+                minlength: 3
+            },
+            newEmail: {
+                required: true,
+                email: true
+            },
+            newPassword: {
+                required: true,
+                minlength: 5
+            },
+            Repassword: {
+                required: true,
+                minlength: 5,
+                equalTo: "newPassword"
+            }
+        },
+        messages: {
+            newUsername: {
+                required: "Không để trống",
+        		maxlength: "Quá dài rồi"
+            },
+            newEmail: {
+                required: "Không để trống"
+            },
+            newPassword: {
+                required: "Không để trống",
+                minlength: "Mật khẩu của bạn quá ngắn"
+            },
+            Repassword: {
+                required: "Không để trống",
+                minlength: "Mật khẩu của bạn quá ngắn",
+                equalTo: "Mật khẩu của bạn không trùng khớp"
+            }
+        }
+    });
+    $('#register_btn').click(function(){
+        var newUsername = $('#newUsername').val();
+        var newPassword = $('#newPassword').val();
+        var Repassword = $('#Repassword').val();
+        if (newUsername == '' || newPassword == '' || newEmail == '' || Repassword == '') {
+            
+        } else {
+            var newUser = {
+                username: newUsername,
+                password: newPassword,
+                repassword: Repassword
+            }
+            objPeople.push(newUser);
+            console.log(objPeople);
+            alert("success register");
+        }
+    });
+    $('#logout').click(function(){
+        $('#inforname1').css('display','block');
+        $('#infor').css('display','none');
+        $('#logout').css('display','none');
+        $('#inforname').css('display','none');
+        $('#formlogin').trigger(reset);
+    });
+});
