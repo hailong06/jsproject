@@ -34,6 +34,10 @@ $(document).ready(function(){
                 success=[i];
                 prname = username;
                 $('#inforname').html('Welcome ' + prname);
+            }else if(username == '' || password == ''){
+
+            }else if(username != objPeople[i].username && password != objPeople[i].password){
+                alert("Tài khoản hoặc mật khẩu không đúng");
             }
         } 
     });
@@ -82,7 +86,7 @@ $(document).ready(function(){
             Repassword: {
                 required: true,
                 minlength: 5,
-                equalTo: "newPassword"
+                equalTo: "#newPassword"
             }
         },
         messages: {
@@ -108,7 +112,7 @@ $(document).ready(function(){
         var newUsername = $('#newUsername').val();
         var newPassword = $('#newPassword').val();
         var Repassword = $('#Repassword').val();
-        if (newUsername == '' || newPassword == '' || newEmail == '' || Repassword == '') {
+        if (newUsername == '' || newPassword == '' || newEmail == '' || Repassword == '' || newPassword != Repassword) {
             
         } else {
             var newUser = {
