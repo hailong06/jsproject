@@ -25,6 +25,9 @@ $(document).ready(function(){
         var username = $('#username').val();
         var password = $('#password').val();
         var success = -1;
+        $("#form").submit(function(event) {
+            event.preventDefault();
+        });
         for (i = 0; i< objPeople.length; i++){
             if(username == objPeople[i].username && password == objPeople[i].password) {
                 $('#inforname1').css('display','none');
@@ -36,8 +39,10 @@ $(document).ready(function(){
                 $('#inforname').html('Welcome ' + prname);
             }else if(username == '' || password == ''){
 
-            }else if(username != objPeople[i].username && password != objPeople[i].password){
-                alert("Tài khoản hoặc mật khẩu không đúng");
+            }else{
+                myText = $("#error-message1").text("Tài khoản hoặc mật khẩu không đúng");
+                $('#error-message1').css('display', 'block');
+                $('#success-message1').css('display', 'none');
             }
         } 
     });
@@ -85,8 +90,8 @@ $(document).ready(function(){
             },
             Repassword: {
                 required: true,
-                minlength: 5,
-                equalTo: "#newPassword"
+                minlength: 5
+                // equalTo: "#newPassword"
             }
         },
         messages: {
@@ -95,7 +100,8 @@ $(document).ready(function(){
         		maxlength: "Quá dài rồi"
             },
             newEmail: {
-                required: "Không để trống"
+                required: "Không để trống",
+                email: "Vui lòng điền đúng định dạng Email"
             },
             newPassword: {
                 required: "Không để trống",
@@ -104,7 +110,7 @@ $(document).ready(function(){
             Repassword: {
                 required: "Không để trống",
                 minlength: "Mật khẩu của bạn quá ngắn",
-                equalTo: "Mật khẩu của bạn không trùng khớp"
+                // equalTo: "Mật khẩu của bạn không trùng khớp"
             }
         }
     });
@@ -112,17 +118,38 @@ $(document).ready(function(){
         var newUsername = $('#newUsername').val();
         var newPassword = $('#newPassword').val();
         var Repassword = $('#Repassword').val();
-        if (newUsername == '' || newPassword == '' || newEmail == '' || Repassword == '' || newPassword != Repassword) {
+        var newEmail = $('#newEmail').val();
+        $("#form2").submit(function(event) {
+            event.preventDefault();
+        });
+        if (newUsername == '' || newPassword == '' || newEmail == '' || Repassword == '' ) {
             
-        } else {
+        }else if( Repassword != newPassword ){
+            myText = $("#error-message2").text("Mật khẩu không trùng khớp");
+            $('#error-message2').css('display', 'block');
+            $('#success-message2').css('display', 'none');
+        }else if (newEmail.indexOf("@") < 0 || newEmail.indexOf(".") < 0) {
+            
+        }else {
             var newUser = {
                 username: newUsername,
                 password: newPassword,
                 repassword: Repassword
             }
+            for(i=0;i<objPeople.length;i++){ 
+                if(newUsername == objPeople[i].username){
+                    myText = $("#error-message2").text("Tài khoản đã tồn tại");
+                    $('#error-message2').css('display', 'block');
+                    $('#success-message2').css('display', 'none');
+                    return;
+                }
+            }
             objPeople.push(newUser);
             console.log(objPeople);
-            alert("success register");
+            myText = $("#success-message2").text("Đăng kí thành công");
+            $('#error-message2').css('display', 'none');
+            $('#success-message2').css('display', 'block');
+            return;
         }
     });
     $('#logout').click(function(){

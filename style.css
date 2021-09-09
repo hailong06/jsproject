@@ -139,6 +139,12 @@ body.active{
 .formBx .form #form .forgot{
     color: #333; 
 }
+.error-message1, .error{
+    color: #f40303;
+}
+.success-message1{
+    color: green;
+}
 /* Form register */
 .formBx .form2{
     position: absolute;
@@ -173,10 +179,26 @@ body.active{
     color: #333;
     
 }
-
-
+.error-message2{
+    color: #f40303;
+}
+.success-message2{
+    color: green;
+}
+/* logout */
 #logout{
     display: none;
+    background-color: #f40303;
+    color: #fff;
+    font-size: medium;
+    width: 100px;
+    height: 50px;
+}
+#inforname{
+    font-family: 'Times New Roman', Times, serif;
+    color: #fff;
+    font-size: large;
+    padding: 15px ;
 }
 @media (max-width: 991px){
     .container{
